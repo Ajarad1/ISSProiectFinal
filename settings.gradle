@@ -1,0 +1,5 @@
+rootProject.name = 'TeledonClientServer'
+include 'teledon-common'
+include 'teledon-networking'
+include 'teledon-server'
+include 'teledon-client'

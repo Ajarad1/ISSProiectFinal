@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.Region?>
+
+<HBox spacing="20.0" style="-fx-padding: 20;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="map.teledon.gui.MainController" prefWidth="800" prefHeight="500">
+    <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+        <Label text="Cazuri Caritabile" style="-fx-font-weight: bold;"/>
+        <TableView fx:id="tabelCazuri" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colNumeCaz" text="Nume Caz" prefWidth="250"/>
+                <TableColumn fx:id="colSuma" text="Suma Adunata" prefWidth="100"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <VBox spacing="15.0" prefWidth="300">
+        <Label text="Cautare Donator Vechi" style="-fx-font-weight: bold;"/>
+        <HBox spacing="5.0">
+            <TextField fx:id="searchField" promptText="Nume donator..." HBox.hgrow="ALWAYS"/>
+            <Button text="Cauta" onAction="#handleSearch"/>
+        </HBox>
+        <ListView fx:id="listaDonatori" prefHeight="100"/>
+
+        <Label text="Date Donator / Donatie Noua" style="-fx-font-weight: bold;"/>
+        <TextField fx:id="numeField" promptText="Nume Complet"/>
+        <TextField fx:id="adresaField" promptText="Adresa"/>
+        <TextField fx:id="telefonField" promptText="Telefon"/>
+        <TextField fx:id="sumaField" promptText="Suma Donata (RON)"/>
+
+        <Button text="Efectueaza Donatia" onAction="#handleDonate" maxWidth="Infinity" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button text="Modifica Date Donator" onAction="#handleUpdate" maxWidth="Infinity" style="-fx-background-color: #FFC107; -fx-text-fill: black;"/>
+
+        <Region VBox.vgrow="ALWAYS" />
+
+        <Button text="Logout" onAction="#handleLogout" maxWidth="Infinity" style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
+    </VBox>
+</HBox>
