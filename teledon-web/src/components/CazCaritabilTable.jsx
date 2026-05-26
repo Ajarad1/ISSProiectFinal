@@ -1,38 +1,43 @@
 // src/components/CazCaritabilTable.jsx
 import React from 'react';
 
-export default function CazCaritabilTable({ cazuri, onDelete, onEdit }) {
+function CazCaritabilTable({ cazuri, onDelete, onEdit, onDonate }) {
+    if (cazuri.length === 0) {
+        return <p>Nu există cazuri caritabile.</p>;
+    }
+
     return (
-        <div style={{ marginTop: '20px' }}>
-            <table border="1" cellPadding="10" style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nume Caz</th>
-                    <th>Suma Totală</th>
-                    <th>Acțiuni</th>
+        <table border="1" style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nume Caz</th>
+                <th>Suma Totală</th>
+                <th>Acțiuni</th>
+            </tr>
+            </thead>
+            <tbody>
+            {cazuri.map(caz => (
+                <tr key={caz.id}>
+                    <td>{caz.id}</td>
+                    <td>{caz.numeCaz}</td>
+                    <td>{caz.sumaTotala} RON</td>
+                    <td>
+                        {/* Butonul NOU de donare */}
+                        <button
+                            onClick={() => onDonate(caz)}
+                            style={{ backgroundColor: 'green', color: 'white', marginRight: '5px' }}>
+                            Donează
+                        </button>
+
+                        <button onClick={() => onEdit(caz)} style={{ marginRight: '5px' }}>Modifică</button>
+                        <button onClick={() => onDelete(caz.id)} style={{ backgroundColor: 'red', color: 'white' }}>Șterge</button>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                {cazuri.length === 0 ? (
-                    <tr>
-                        <td colSpan="4" style={{ textAlign: 'center' }}>Nu există cazuri.</td>
-                    </tr>
-                ) : (
-                    cazuri.map((caz) => (
-                        <tr key={caz.id}>
-                            <td>{caz.id}</td>
-                            <td>{caz.numeCaz}</td>
-                            <td>{caz.sumaTotala}</td>
-                            <td>
-                                <button onClick={() => onEdit(caz)} style={{ marginRight: '10px' }}>Modifică</button>
-                                <button onClick={() => onDelete(caz.id)}>Șterge</button>
-                            </td>
-                        </tr>
-                    ))
-                )}
-                </tbody>
-            </table>
-        </div>
+            ))}
+            </tbody>
+        </table>
     );
 }
+
+export default CazCaritabilTable;

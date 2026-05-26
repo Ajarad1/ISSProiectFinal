@@ -140,5 +140,9 @@ public class DonatorDbRepository implements DonatorRepository {
         logger.traceExit(donatori);
         return donatori;
     }
+    @Override
+    public Donator findByTelefon(String telefon){
+        return null;
+    }
 }
 

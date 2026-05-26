@@ -5,6 +5,7 @@ import CazCaritabilTable from './components/CazCaritabilTable.jsx';
 import CazCaritabilForm from './components/CazCaritabilForm.jsx';
 import FilterBar from './components/FilterBar.jsx';
 import Login from './components/Login.jsx';
+import DonatieModal from './components/DonatieModal.jsx'; // Importăm modalul nou
 import './App.css';
 
 function App() {
@@ -12,6 +13,9 @@ function App() {
     const [cazuri, setCazuri] = useState([]);
     const [mesaj, setMesaj] = useState('');
     const [cazToEdit, setCazToEdit] = useState(null);
+
+    // Stare nouă pentru a reține cazul selectat pentru donație
+    const [cazToDonate, setCazToDonate] = useState(null);
 
     const loadCazuri = (filtruNume = '') => {
         getAllCazuri(filtruNume)
@@ -35,20 +39,19 @@ function App() {
     useEffect(() => {
         let socket;
         if (isAuthenticated) {
-            // Conectare la endpoint-ul definit în WebSocketConfig
             socket = new WebSocket('ws://localhost:8080/chatws');
 
             socket.onmessage = (event) => {
                 console.log('Notificare primită:', event.data);
                 setMesaj('Notificare: ' + event.data);
-                loadCazuri(); // Reîncărcare automată când altcineva modifică baza de date
+                loadCazuri(); // Reîncărcare automată când se face o donație sau se adaugă un caz
             };
 
             socket.onerror = (err) => console.error('WebSocket Error:', err);
         }
 
         return () => {
-            if (socket) socket.close(); // Cleanup la logout/demontare
+            if (socket) socket.close();
         };
     }, [isAuthenticated]);
 
@@ -106,6 +109,7 @@ function App() {
                 cazuri={cazuri}
                 onDelete={handleDelete}
                 onEdit={(caz) => setCazToEdit(caz)}
+                onDonate={(caz) => setCazToDonate(caz)} // Transmitem funcția către tabel
             />
 
             <CazCaritabilForm
@@ -113,6 +117,14 @@ function App() {
                 cazToEdit={cazToEdit}
                 onCancel={() => setCazToEdit(null)}
             />
+
+            {/* Afișăm modalul suprapus doar dacă un caz a fost selectat pentru donație */}
+            {cazToDonate && (
+                <DonatieModal
+                    caz={cazToDonate}
+                    onClose={() => setCazToDonate(null)}
+                />
+            )}
         </div>
     );
 }

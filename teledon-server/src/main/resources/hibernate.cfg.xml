@@ -14,5 +14,7 @@
 
         <mapping class="map.teledon.domain.CazCaritabil"/>
         <mapping class="map.teledon.domain.Voluntar"/>
+        <mapping class="map.teledon.domain.Donator"/>
+        <mapping class="map.teledon.domain.Donatie"/>
     </session-factory>
 </hibernate-configuration>

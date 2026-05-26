@@ -70,3 +70,49 @@ export const updateCaz = (id, caz) => {
         return response.json();
     });
 };
+
+// Căutăm un donator după telefon
+export const cautaDonator = (telefon) => {
+    const token = localStorage.getItem('jwt');
+    return fetch(`http://localhost:8080/teledon/donatori/cauta?telefon=${telefon}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(response => {
+        if (response.status === 404) return null; // Donatorul nu există încă
+        if (!response.ok) throw new Error('Eroare la căutarea donatorului');
+        return response.json();
+    });
+};
+
+// Adăugăm un donator nou
+export const addDonator = (donator) => {
+    const token = localStorage.getItem('jwt');
+    return fetch('http://localhost:8080/teledon/donatori', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(donator)
+    }).then(response => {
+        if (!response.ok) throw new Error('Eroare la adăugarea donatorului');
+        return response.json();
+    });
+};
+
+// Salvăm donația (care va declanșa și WebSocket-ul pe server)
+export const addDonatie = (payload) => {
+    const token = localStorage.getItem('jwt');
+    return fetch('http://localhost:8080/teledon/donatii', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+    }).then(response => {
+        if (!response.ok) throw new Error('Eroare la adăugarea donației');
+        return response.json();
+    });
+};

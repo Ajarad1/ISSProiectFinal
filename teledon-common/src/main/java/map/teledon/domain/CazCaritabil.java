@@ -7,10 +7,7 @@ import java.io.Serializable;
 @Table(name = "CazuriCaritabile")
 public class CazCaritabil extends Entity<Integer> implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+
 
     @Column(name = "numeCaz")
     private String numeCaz;
@@ -27,8 +24,7 @@ public class CazCaritabil extends Entity<Integer> implements Serializable {
     }
 
     // Gettere și Settere obligatorii
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+
     public String getNumeCaz() { return numeCaz; }
     public void setNumeCaz(String numeCaz) { this.numeCaz = numeCaz; }
     public Double getSumaTotala() { return sumaTotala; }
